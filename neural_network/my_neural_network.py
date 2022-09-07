@@ -25,6 +25,7 @@ class NN():
             self.b[l] = np.zeros((self.n[l], 1))
 
     def train(self, epochs, A_0, Y, lr=0.1):
+        print('Training...'.center(60, '='))
         loss_list = []
         for epoch in range(epochs):
             # 前向传播
@@ -35,6 +36,7 @@ class NN():
             self.backward_propagation(A_0, Y)
             # 权重更新
             self.weights_update(lr)
+            print(f"Epoch:{epoch+1}/{epochs} loss:{loss_list[-1]}")
 
         plt.plot(list(range(epochs)), loss_list)
         plt.show()
@@ -86,7 +88,12 @@ class NN():
             self.b[l] -= lr * self.db[l]
 
     def loss(self, Y):
-        loss = np.sum((self.A[self.layer_num] - Y) ** 2)
+        loss = 0.
+        for m in range(Y.shape[1]):
+            for i in range(Y.shape[0]):
+                if Y[i, m] == 1.:
+                    loss += -np.log(self.A[self.layer_num][i, m])  # 交叉熵损失
+        loss = 1 / Y.shape[1] * loss
         return loss
 
     def sigmoid(self, x):
