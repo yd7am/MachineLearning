@@ -1,2 +1,2 @@
-[1] 南瓜书PumpkinBook <br>\n
-[2] 机器学习 <br>\n
+[1] 南瓜书PumpkinBook
+[2] 机器学习
